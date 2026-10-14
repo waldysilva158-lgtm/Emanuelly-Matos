@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#31594b">
+<title>{{ site_name }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="{{ url_for('home') }}">{{ site_name }}</a>
+<nav><a href="{{ url_for('home') }}#procedimentos">Procedimentos</a><a href="{{ url_for('home') }}#produtos">Produtos</a><a href="{{ url_for('home') }}#agendar">Agendar</a><a href="{{ url_for('admin_login') }}">ADM</a></nav></header>
+{% with messages = get_flashed_messages() %}{% if messages %}<div class="notices">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+<main>{% block content %}{% endblock %}</main>
+<footer><p>© {{ site_name }} · Beleza, cuidado e bem-estar</p></footer>
+</body></html>

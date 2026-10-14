@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+<div class="hero-copy"><p class="eyebrow">BELEZA • CUIDADO • AUTOESTIMA</p><h1>{{ headline }}</h1><p>{{ about }}</p><a class="button" href="#agendar">Solicitar agendamento</a></div>
+{% if hero_image %}<img class="hero-image" src="{{ hero_image }}" alt="Imagem de apresentação">{% else %}<div class="hero-art"><span>EM</span><small>Seu momento de cuidado</small></div>{% endif %}
+</section>
+<section class="section" id="procedimentos"><div class="section-head"><p class="eyebrow">CUIDADOS PERSONALIZADOS</p><h2>Procedimentos</h2></div>
+<div class="cards">{% for s in services %}<article class="card">{% if s.image_url %}<img src="{{ s.image_url }}" alt="{{ s.name }}">{% endif %}<div class="card-body"><h3>{{ s.name }}</h3><p>{{ s.description }}</p><strong>{{ s.price }}</strong><a href="#agendar" class="text-link">Quero agendar →</a></div></article>{% else %}<p>Os procedimentos serão cadastrados pelo painel ADM.</p>{% endfor %}</div></section>
+<section class="section soft" id="produtos"><div class="section-head"><p class="eyebrow">SELEÇÃO ESPECIAL</p><h2>Produtos</h2></div>
+<div class="cards">{% for p in products %}<article class="card">{% if p.image_url %}<img src="{{ p.image_url }}" alt="{{ p.name }}">{% endif %}<div class="card-body"><h3>{{ p.name }}</h3><p>{{ p.description }}</p><strong>{{ p.price }}</strong>{% if whatsapp %}<a class="text-link" target="_blank" rel="noopener" href="https://wa.me/{{ whatsapp|replace('+','')|replace(' ','')|replace('-','') }}?text=Olá! Tenho interesse no produto {{ p.name|urlencode }}">Consultar pelo WhatsApp →</a>{% endif %}</div></article>{% else %}<p>Os produtos serão cadastrados pelo painel ADM.</p>{% endfor %}</div></section>
+<section class="section booking" id="agendar"><div><p class="eyebrow">VAMOS CUIDAR DE VOCÊ?</p><h2>Solicite seu agendamento</h2><p>O pedido ficará pendente até a confirmação da equipe.</p></div>
+<form class="form" method="post" action="{{ url_for('book') }}"><label>Nome completo<input name="name" required maxlength="120"></label><label>WhatsApp<input name="phone" required inputmode="tel" placeholder="(00) 00000-0000"></label><label>Procedimento<select name="service" required><option value="">Selecione</option>{% for s in services %}<option>{{ s.name }}</option>{% endfor %}<option>Outro / ainda não decidi</option></select></label><label>Data desejada<input type="date" name="date" required></label><label>Mensagem (opcional)<textarea name="message" rows="3"></textarea></label><button class="button" type="submit">Enviar solicitação</button>
+{% if whatsapp %}<a class="button secondary" target="_blank" rel="noopener" href="https://wa.me/{{ whatsapp|replace('+','')|replace(' ','')|replace('-','') }}?text=Olá! Gostaria de informações sobre agendamento.">Falar diretamente no WhatsApp</a>{% endif %}</form></section>
+{% endblock %}
